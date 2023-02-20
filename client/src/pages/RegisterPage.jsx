@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Logo, FormRow } from '../components';
+import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage.styles';
 
 const initialState = {
@@ -7,11 +7,16 @@ const initialState = {
   email: '',
   password: '',
   isMember: true,
+  showAlert: false,
 };
 
 const RegisterPage = () => {
   const [values, setValues] = useState(initialState);
   // global state and useNavigate
+
+  const toggleMember = () => {
+    setValues({ ...values, isMember: !values.isMember });
+  };
 
   const handleChange = (e) => {
     console.log(e.target);
@@ -26,15 +31,18 @@ const RegisterPage = () => {
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
         <Logo />
-        <h3>Login</h3>
+        <h3>{values.isMember ? 'Login' : 'Register'}</h3>
+        {values.showAlert && <Alert message="Must complete all fields!" />}
+        {!values.isMember && (
+          <FormRow
+            labelText="name"
+            type="text"
+            value={values.name}
+            name="name"
+            handleChange={handleChange}
+          />
+        )}
 
-        <FormRow
-          labelText="name"
-          type="text"
-          value={values.name}
-          name="name"
-          handleChange={handleChange}
-        />
         <FormRow
           labelText="email"
           type="email"
@@ -53,6 +61,12 @@ const RegisterPage = () => {
         <button type="submit" className="btn btn-block">
           Submit
         </button>
+        <p>
+          {values.isMember ? 'Not a member yet?' : 'Already a member?'}
+          <button type="button" onClick={toggleMember} className="member-btn">
+            {values.isMember ? 'Register' : 'Login'}
+          </button>
+        </p>
       </form>
     </Wrapper>
   );
