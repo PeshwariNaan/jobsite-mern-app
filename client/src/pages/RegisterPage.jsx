@@ -1,30 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage.styles';
+import { useAppContext } from '../context/appContext';
 
 const initialState = {
   name: '',
   email: '',
   password: '',
   isMember: true,
-  showAlert: false,
 };
 
 const RegisterPage = () => {
   const [values, setValues] = useState(initialState);
   // global state and useNavigate
+  const { isLoading, showAlert, displayAlert } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
   const handleChange = (e) => {
-    console.log(e.target);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      displayAlert();
+    }
+    console.log(values);
   };
 
   return (
@@ -32,7 +37,7 @@ const RegisterPage = () => {
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>{values.isMember ? 'Login' : 'Register'}</h3>
-        {values.showAlert && <Alert message="Must complete all fields!" />}
+        {showAlert && <Alert />}
         {!values.isMember && (
           <FormRow
             labelText="name"
@@ -57,7 +62,6 @@ const RegisterPage = () => {
           name="password"
           handleChange={handleChange}
         />
-
         <button type="submit" className="btn btn-block">
           Submit
         </button>
