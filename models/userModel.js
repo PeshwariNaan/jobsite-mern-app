@@ -4,7 +4,7 @@ import validator from 'validator';
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'A user must have a name!'],
+    required: [true, 'User must provide a name.'],
     trim: true,
     maxlength: [50, 'Name must have less than or equal to 50 characters'],
     minlength: [3, 'Name must have more than or equal to 3 characters'],
