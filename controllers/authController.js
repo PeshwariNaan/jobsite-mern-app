@@ -13,7 +13,17 @@ const register = async (req, res) => {
     throw new BadRequestError('Sorry. This email is already in use.');
   }
   const user = await User.create({ name, email, password });
-  res.status(StatusCodes.CREATED).json({ user });
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({
+    //Here we hardcoded the values that we want on the response. We did this to avoid getting the PW back because it will be sent with .create method
+    user: {
+      email: user.email,
+      name: user.name,
+      lastName: user.lastName,
+      location: user.location,
+    },
+    token,
+  });
 };
 
 const login = (req, res) => {
