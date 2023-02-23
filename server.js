@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import dotenv from 'dotenv';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
@@ -14,9 +15,15 @@ import connectDB from './db/connect.js';
 import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobRoutes.js';
 
+app.use(cors()); //Here we can set up an origin with a config variable but we will use a proxy
 app.use(express.json());
+
 // Middleware
-app.get('/', (req, res) => {
+// app.get('/', (req, res) => { //Just a dummy route we use as we set things up
+//   res.send('Welcome!!');
+// });
+
+app.get('/api/v1', (req, res) => {
   res.send('Welcome!!');
 });
 
