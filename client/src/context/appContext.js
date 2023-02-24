@@ -9,6 +9,9 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  SETUP_USER_BEGIN,
+  SETUP_USER_SUCCESS,
+  SETUP_USER_FAIL,
 } from './actions';
 import reducer from './reducer';
 
@@ -83,13 +86,13 @@ const AppProvider = ({ children }) => {
   const loginUser = async (currentUser) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
-      const response = await axios({
+      const { data } = await axios({
         method: 'POST',
         url: '/api/v1/auth/login',
         data: currentUser,
       });
       //console.log(response);
-      const { user, token, location } = response.data;
+      const { user, token, location } = data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { user, token, location },
@@ -105,11 +108,37 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const setupUser = async ({ currentUser, endPoint, alertText }) => {
+    dispatch({ type: SETUP_USER_BEGIN });
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        url: `/api/v1/auth/${endPoint}`,
+        data: currentUser,
+      });
+      //console.log(response);
+      const { user, token, location } = data;
+      dispatch({
+        type: SETUP_USER_SUCCESS,
+        payload: { user, token, location, alertText },
+      });
+      addUserToLocalStorage({ user, token, location });
+    } catch (error) {
+      console.log(error.response);
+      dispatch({
+        type: SETUP_USER_FAIL,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   const value = {
     ...state,
     displayAlert,
     registerUser,
     loginUser,
+    setupUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
