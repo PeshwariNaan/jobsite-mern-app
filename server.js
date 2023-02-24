@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'express-async-errors';
+import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { notFoundMiddleware } from './middleware/not-found.js';
@@ -16,6 +17,9 @@ import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobRoutes.js';
 
 app.use(cors()); //Here we can set up an origin with a config variable but we will use a proxy
+if (process.env.NODE_ENV === 'developement') {
+  app.use(morgan('dev'));
+}
 app.use(express.json());
 
 // Middleware

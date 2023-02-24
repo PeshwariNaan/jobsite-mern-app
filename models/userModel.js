@@ -47,7 +47,7 @@ UserSchema.pre('save', async function () {
 });
 
 UserSchema.methods.createJWT = function () {
-  console.log(this);
+  //console.log(this); // Careful with this log - it sends the password to the console
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
