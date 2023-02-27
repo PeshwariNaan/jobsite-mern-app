@@ -5,14 +5,13 @@ import Logo from './Logo';
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 
 const Navbar = () => {
+  const [showLogout, setShowLogout] = useState(false);
+  const { toggleSidebar, user, logoutUser } = useAppContext();
+
   return (
     <Wrapper>
       <div className="nav-center">
-        <button
-          type="button"
-          className="toggle-btn"
-          onClick={() => console.log('toggle sidebar')}
-        >
+        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
           <FaAlignLeft />
         </button>
         <div>
@@ -23,18 +22,15 @@ const Navbar = () => {
           <button
             type="button"
             className="btn"
-            onClick={() => console.log('cshow-hide dropdown')}
+            onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            Joshua
+            {/* This is an example of optional chaining */}
+            {user?.name}
             <FaCaretDown />
           </button>
-          <div className="dropdown show-dropdown">
-            <button
-              type="button"
-              className="dropdown-btn"
-              onClick={() => console.log('logout user')}
-            >
+          <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+            <button type="button" className="dropdown-btn" onClick={logoutUser}>
               Logout
             </button>
           </div>
