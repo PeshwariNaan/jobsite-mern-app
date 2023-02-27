@@ -25,7 +25,7 @@ const Navbar = () => {
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            {/* This is an example of optional chaining */}
+            {/* This is an example of optional chaining - a nicer variation of user && user.name */}
             {user?.name}
             <FaCaretDown />
           </button>
