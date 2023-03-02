@@ -1,9 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import { FaTimes } from 'react-icons/fa';
 import NavLinks from './NavLinks';
 import Wrapper from '../assets/wrappers/SmallSidebar';
-import links from '../utils/links';
 import Logo from './Logo';
 
 const SmallSidebar = () => {

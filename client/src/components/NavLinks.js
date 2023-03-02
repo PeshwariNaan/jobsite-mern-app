@@ -9,8 +9,10 @@ const NavLinks = ({ toggleSidebar }) => {
         return (
           <NavLink
             to={path}
+            end
             key={id}
             onClick={toggleSidebar}
+            // The library provides the is active link
             className={({ isActive }) =>
               isActive ? 'nav-link active' : 'nav-link'
             }
