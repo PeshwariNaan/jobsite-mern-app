@@ -14,6 +14,9 @@ import {
   SETUP_USER_FAIL,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -36,6 +39,39 @@ const initialState = {
 const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios - global setup
+  // axios.defaults.headers['Authorization'] = `Bearer ${state.token}`;
+
+  // Different approach using interceptors
+  const authFetch = axios.create({
+    baseURL: '/api/v1/',
+  });
+
+  // Request
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers['Authorization'] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Response
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      console.log(error.response);
+      if (error.response.status === 401) {
+        console.log('AUTH ERROR');
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -144,6 +180,37 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage();
   };
 
+  const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+    try {
+      const { data } = await authFetch.patch(
+        'auth/updateUser',
+        currentUser
+
+        // Below was first implementation
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${state.token}`,
+        //   },
+        // }
+      );
+      const { user, location, token } = data;
+
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, location, token },
+      });
+      addUserToLocalStorage({ user, location, token });
+    } catch (error) {
+      //console.log(error.response);
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   const value = {
     ...state,
     initialState,
@@ -153,6 +220,7 @@ const AppProvider = ({ children }) => {
     setupUser,
     toggleSidebar,
     logoutUser,
+    updateUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

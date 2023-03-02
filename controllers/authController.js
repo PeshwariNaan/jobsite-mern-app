@@ -60,7 +60,7 @@ const updateUser = async (req, res) => {
   user.lastName = lastName;
   user.location = location;
 
-  await user.save();
+  await user.save(); // user.save() can cause issues
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
