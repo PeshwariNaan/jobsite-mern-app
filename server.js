@@ -15,6 +15,7 @@ import connectDB from './db/connect.js';
 //routers
 import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobRoutes.js';
+import authenticateUser from './middleware/auth.js';
 
 app.use(cors()); //Here we can set up an origin with a config variable but we will use a proxy
 if (process.env.NODE_ENV === 'developement') {
@@ -32,7 +33,7 @@ app.get('/api/v1', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
