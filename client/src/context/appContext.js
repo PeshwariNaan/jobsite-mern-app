@@ -65,9 +65,10 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      console.log(error.response);
+      //console.log(error.response);
       if (error.response.status === 401) {
-        console.log('AUTH ERROR');
+        //console.log('AUTH ERROR');
+        logoutUser();
       }
       return Promise.reject(error);
     }
@@ -186,8 +187,7 @@ const AppProvider = ({ children }) => {
       const { data } = await authFetch.patch(
         'auth/updateUser',
         currentUser
-
-        // Below was first implementation
+        // Below was first implementation where we send the header like this..
         // {
         //   headers: {
         //     Authorization: `Bearer ${state.token}`,
@@ -202,11 +202,12 @@ const AppProvider = ({ children }) => {
       });
       addUserToLocalStorage({ user, location, token });
     } catch (error) {
-      //console.log(error.response);
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
     }
     clearAlert();
   };
