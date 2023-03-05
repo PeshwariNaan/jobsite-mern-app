@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true,
     maxlength: [50, 'Location must have less than or equal to 50 characters'],
-    default: 'Loserville',
+    default: 'My city',
   },
 });
 
