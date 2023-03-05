@@ -5,6 +5,7 @@ import { MdInsertEmoticon } from 'react-icons/md';
 
 const AddJobPage = () => {
   const {
+    isLoading,
     isEditing,
     showAlert,
     displayAlert,
@@ -16,15 +17,20 @@ const AddJobPage = () => {
     status,
     statusOptions,
     handleChange,
+    clearValues,
+    createJob,
   } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!position || !company || !jobLocation) {
-      displayAlert();
+    // if (!position || !company || !jobLocation) {
+    //   displayAlert();
+    //   return;
+    // }
+    if (isEditing) {
       return;
     }
-    console.log('create job!');
+    createJob();
   };
 
   const handleJobInput = (e) => {
@@ -82,9 +88,19 @@ const AddJobPage = () => {
             <button
               className="btn btn-block submit-btn"
               type="submit"
+              disabled={isLoading}
               onClick={handleSubmit}
             >
               submit
+            </button>
+            <button
+              className="btn btn-block clear-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                clearValues();
+              }}
+            >
+              clear
             </button>
           </div>
         </div>

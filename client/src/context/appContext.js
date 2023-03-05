@@ -19,6 +19,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -182,6 +185,29 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN });
+    try {
+      const { position, company, jobLocation, jobType, status } = state;
+      await authFetch.post('/jobs', {
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      });
+      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -196,6 +222,11 @@ const AppProvider = ({ children }) => {
       type: HANDLE_CHANGE,
       payload: { name, value },
     });
+  };
+
+  const clearValues = () => {
+    console.log('Clear values has been pressed');
+    dispatch({ type: CLEAR_VALUES });
   };
 
   const updateUser = async (currentUser) => {
@@ -240,6 +271,8 @@ const AppProvider = ({ children }) => {
     logoutUser,
     updateUser,
     handleChange,
+    clearValues,
+    createJob,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
