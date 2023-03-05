@@ -20,3 +20,7 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
 
 export const LOGOUT_USER = 'LOGOUT_USER';
+
+export const HANDLE_CHANGE = 'HANDLE_CHANGE';
+
+export const CLEAR_VALUES = 'CLEAR_VALUES';

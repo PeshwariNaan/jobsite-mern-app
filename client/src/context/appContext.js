@@ -17,6 +17,8 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from './actions';
 import reducer from './reducer';
 
@@ -189,6 +191,13 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage();
   };
 
+  const handleChange = ({ name, value }) => {
+    dispatch({
+      type: HANDLE_CHANGE,
+      payload: { name, value },
+    });
+  };
+
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN });
     try {
@@ -230,6 +239,7 @@ const AppProvider = ({ children }) => {
     toggleSidebar,
     logoutUser,
     updateUser,
+    handleChange,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
