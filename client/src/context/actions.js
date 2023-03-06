@@ -18,6 +18,9 @@ export const CREATE_JOB_BEGIN = 'CREATE_JOB_BEGIN';
 export const CREATE_JOB_SUCCESS = 'CREATE_JOB_SUCCESS';
 export const CREATE_JOB_ERROR = 'CREATE_JOB_ERROR';
 
+export const GET_JOBS_BEGIN = 'GET_JOBS_BEGIN';
+export const GET_JOBS_SUCCESS = 'GET_JOBS_SUCCESS';
+
 export const DISPLAY_ALERT = 'SHOW_ALERT';
 
 export const CLEAR_ALERT = 'CLEAR_ALERT';
