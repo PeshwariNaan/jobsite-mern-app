@@ -15,15 +15,8 @@ const RegisterPage = () => {
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
 
-  const {
-    isLoading,
-    showAlert,
-    displayAlert,
-    registerUser,
-    user,
-    loginUser,
-    setupUser,
-  } = useAppContext();
+  const { isLoading, showAlert, displayAlert, user, setupUser } =
+    useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });

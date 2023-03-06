@@ -1,5 +1,3 @@
-import { IoListCircle } from 'react-icons/io5';
-
 const FormRowSelect = ({ labelText, name, value, handleChange, list }) => {
   return (
     <div className="form-row">

@@ -32,3 +32,5 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const HANDLE_CHANGE = 'HANDLE_CHANGE';
 
 export const CLEAR_VALUES = 'CLEAR_VALUES';
+
+export const SET_EDIT_JOB = 'SET_EDIT_JOB';
