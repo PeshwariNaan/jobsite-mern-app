@@ -1,14 +1,14 @@
 import { FormRow, Alert, FormRowSelect } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
-import { MdInsertEmoticon } from 'react-icons/md';
+//import { MdInsertEmoticon } from 'react-icons/md';
 
 const AddJobPage = () => {
   const {
     isLoading,
     isEditing,
     showAlert,
-    displayAlert,
+    //displayAlert,
     position,
     company,
     jobLocation,
