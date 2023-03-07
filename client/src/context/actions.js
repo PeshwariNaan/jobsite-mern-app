@@ -43,3 +43,5 @@ export const HANDLE_CHANGE = 'HANDLE_CHANGE';
 export const CLEAR_VALUES = 'CLEAR_VALUES';
 
 export const SET_EDIT_JOB = 'SET_EDIT_JOB';
+
+export const CLEAR_FILTERS = 'CLEAR_FILTERS';

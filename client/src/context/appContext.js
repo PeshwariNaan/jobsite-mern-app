@@ -31,6 +31,7 @@ import {
   EDIT_JOB_ERROR,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
+  CLEAR_FILTERS,
 } from './actions';
 import reducer from './reducer';
 
@@ -55,6 +56,11 @@ const initialState = {
   jobType: 'full-time',
   statusOptions: ['interview', 'pending', 'declined'],
   status: 'pending',
+  search: '',
+  searchStatus: 'all',
+  searchType: 'all',
+  sort: 'latest',
+  sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
   showSidebar: false,
   jobs: [],
   totalJobs: 0,
@@ -349,6 +355,10 @@ const AppProvider = ({ children }) => {
     clearValues();
   };
 
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   const value = {
     ...state,
     initialState,
@@ -367,6 +377,7 @@ const AppProvider = ({ children }) => {
     editJob,
     deleteJob,
     showStats,
+    clearFilters,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
