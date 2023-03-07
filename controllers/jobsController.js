@@ -18,7 +18,42 @@ export const createJob = async (req, res) => {
 };
 
 export const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.userId });
+  const { search, status, jobType, sort } = req.query;
+
+  const queryObject = {
+    createdBy: req.user.userId,
+  };
+
+  // Chain conditions based on selection
+  if (status && status !== 'all') {
+    queryObject.status = status;
+  }
+  if (jobType && jobType !== 'all') {
+    queryObject.jobType = jobType;
+  }
+  if (search) {
+    queryObject.position = { $regex: search, $options: 'i' };
+  }
+
+  //NO AWAIT
+  console.log(queryObject);
+  let result = Job.find(queryObject);
+
+  // Chain sort options
+  if (sort === 'latest') {
+    result = result.sort('-createdAt');
+  }
+  if (sort === 'oldest') {
+    result = result.sort('createdAt');
+  }
+  if (sort === 'a-z') {
+    result = result.sort('position');
+  }
+  if (sort === 'z-a') {
+    result = result.sort('-position');
+  }
+
+  const jobs = await result;
 
   res
     .status(StatusCodes.OK)
