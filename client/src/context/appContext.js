@@ -229,8 +229,15 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // Get Jobs Function
   const getJobs = async () => {
-    let url = `/jobs`;
+    const { search, searchStatus, searchType, sort } = state;
+
+    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+
+    if (search) {
+      url = url + `&search=${search}`;
+    }
     dispatch({ type: GET_JOBS_BEGIN });
 
     try {
