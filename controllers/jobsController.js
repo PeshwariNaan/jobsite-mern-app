@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
+import moment from 'moment';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 import checkPermissions from '../utils/checkPermissions.js';
 import Job from '../models/jobModel.js';
@@ -114,6 +115,21 @@ export const showStats = async (req, res) => {
     { $sort: { '_id.year': -1, '_id.month': -1 } },
     { $limit: 6 },
   ]);
+
+  monthlyApplications = monthlyApplications
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+      // in moment the months are counted from 0 -> 11 so we need to subtract 1 when using mongoDB
+      const date = moment()
+        .month(month - 1)
+        .year(year)
+        .format('MMM Y');
+      return { date, count };
+    })
+    .reverse();
 
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
