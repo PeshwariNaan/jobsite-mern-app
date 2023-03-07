@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 import checkPermissions from '../utils/checkPermissions.js';
@@ -76,5 +77,26 @@ export const deleteJob = async (req, res) => {
 };
 
 export const showStats = async (req, res) => {
-  res.send('Show stats');
+  //  Using let so we can manipulate the stats variable with reduce below
+  let stats = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },
+  ]);
+
+  // without the reduce method below we are returned an array - the reduce method will yield an object instead
+  stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr;
+    acc[title] = count;
+    return acc;
+  }, {});
+
+  // Added some default values for new users and users that don't have all values - keeps the frontend from breaking
+  const defaultStats = {
+    pending: stats.pending || 0,
+    interview: stats.interview || 0,
+    declined: stats.declined || 0,
+  };
+  let monthlyApplications = [];
+
+  res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
