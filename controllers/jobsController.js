@@ -5,6 +5,7 @@ import { BadRequestError, NotFoundError } from '../errors/index.js';
 import checkPermissions from '../utils/checkPermissions.js';
 import Job from '../models/jobModel.js';
 
+// Create Job Controller
 export const createJob = async (req, res) => {
   const { position, company } = req.body;
 
@@ -17,6 +18,7 @@ export const createJob = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ job });
 };
 
+// GetAllJobs Controller
 export const getAllJobs = async (req, res) => {
   const { search, status, jobType, sort } = req.query;
 
@@ -53,11 +55,20 @@ export const getAllJobs = async (req, res) => {
     result = result.sort('-position');
   }
 
+  // Pagination setup
+  // The query string will be a string so we need to convert to a number
+  const page = Number(req.query.page) || 2;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+
   const jobs = await result;
 
-  res
-    .status(StatusCodes.OK)
-    .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / limit);
+
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
 };
 
 export const updateJob = async (req, res) => {
