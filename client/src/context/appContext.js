@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
   // axios - global setup
   // axios.defaults.headers['Authorization'] = `Bearer ${state.token}`;
 
-  // Different approach using interceptors
+  // AXIOS INTERCEPTORS
   const authFetch = axios.create({
     baseURL: '/api/v1/',
   });
@@ -109,29 +109,34 @@ const AppProvider = ({ children }) => {
     }
   );
 
+  // DISPLAY ALERT FUNCTION
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
     clearAlert();
   };
 
+  // TIME-OUT FUNCTION FOR CLEARING ALERTS
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
   };
 
+  // ADDS USER TO LOCAL STORAGE
   const addUserToLocalStorage = ({ user, token, location }) => {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token);
     localStorage.setItem('location', location);
   };
 
+  // REMOVE USER DATA FROM LOCAL STORAGE
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('location');
   };
 
+  // REGISTERS NEW USER - JUST FOR EXAMPLE - MOVED TO SETUP USER
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -157,6 +162,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // LOGS IN USER - JUST FOR EXAMPLE - MOVED TO SETUP USER
   const loginUser = async (currentUser) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
@@ -182,6 +188,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // SET UP USER - HANDLES NEW USERS AND LOGIN
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
@@ -207,6 +214,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // CREATE A NEW JOB
   const createJob = async () => {
     dispatch({ type: CREATE_JOB_BEGIN });
     try {
@@ -230,7 +238,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  // Get Jobs Function
+  // GET ALL JOBS
   const getJobs = async () => {
     const { search, searchStatus, searchType, sort, page } = state;
 
@@ -249,21 +257,23 @@ const AppProvider = ({ children }) => {
         payload: { jobs, totalJobs, numOfPages },
       });
     } catch (error) {
-      console.log(error.response);
-      //logoutUser()
+      logoutUser();
     }
     clearAlert();
   };
 
+  // TOGGLE THE SIDEBAR
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
 
+  // LOGOUT USER
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
   };
 
+  // HANDLE CHANGE
   const handleChange = ({ name, value }) => {
     dispatch({
       type: HANDLE_CHANGE,
@@ -271,11 +281,12 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  // CLEAR VALUES
   const clearValues = () => {
-    console.log('Clear values has been pressed');
     dispatch({ type: CLEAR_VALUES });
   };
 
+  // UPDATE USER
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN });
     try {
@@ -306,21 +317,24 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
+  // SET EDIT JOB
   const setEditJob = (id) => {
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
   };
 
+  // DELETE JOB
   const deleteJob = async (jobId) => {
     dispatch({ type: DELETE_JOB_BEGIN });
     try {
       await authFetch.delete(`/jobs/${jobId}`);
       getJobs();
     } catch (error) {
-      console.log(error.response);
-      //logoutUser()
+      logoutUser();
     }
   };
 
+  // EDIT JOB
   const editJob = async () => {
     dispatch({ type: EDIT_JOB_BEGIN });
     try {
@@ -357,8 +371,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error.response);
-      //logoutUser()
+      logoutUser();
     }
     clearValues();
   };

@@ -7,6 +7,8 @@ const StatsPage = () => {
 
   useEffect(() => {
     showStats();
+    // NOTE - we can also implement the useCallback function here - The followiing line is the quick and dirty way to clear the warning
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {
