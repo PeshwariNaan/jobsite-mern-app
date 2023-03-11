@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect } from 'react';
 import axios from 'axios';
 import {
   DISPLAY_ALERT,
@@ -34,6 +34,8 @@ import {
   CLEAR_FILTERS,
   CHANGE_PAGE,
   DELETE_JOB_ERROR,
+  GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_SUCCESS,
 } from './actions';
 import reducer from './reducer';
 
@@ -44,6 +46,7 @@ import reducer from './reducer';
 
 const initialState = {
   isLoading: false,
+  isUserLoading: true,
   showAlert: false,
   alertText: '',
   alertType: '',
@@ -362,6 +365,20 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // GET CURRENT USER
+  const getCurrentUser = async () => {
+    dispatch({ GET_CURRENT_USER_BEGIN });
+    try {
+      const { data } = authFetch('/auth/getCurrentUser');
+      const { user, location } = data;
+      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, location } });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      logoutUser();
+    }
+  };
+
+  // SHOW STATS FOR JOBS
   const showStats = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
 
@@ -387,6 +404,10 @@ const AppProvider = ({ children }) => {
   const changePage = (page) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   const value = {
     ...state,
