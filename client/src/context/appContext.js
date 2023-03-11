@@ -33,6 +33,7 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  DELETE_JOB_ERROR,
 } from './actions';
 import reducer from './reducer';
 
@@ -330,8 +331,15 @@ const AppProvider = ({ children }) => {
       await authFetch.delete(`/jobs/${jobId}`);
       getJobs();
     } catch (error) {
-      logoutUser();
+      //logoutUser(); // We only took this out because we have a test user - normally we want to logout user
+      // Because of this we add DELETE_JOB_ERROR
+      if (error.response.status === 401) return;
+      dispatch({
+        type: DELETE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
+    clearAlert();
   };
 
   // EDIT JOB

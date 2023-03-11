@@ -14,7 +14,7 @@ const DB = process.env.MONGO_URL.replace(
 const start = async () => {
   try {
     await connectDB(DB);
-    await Job.deleteMany();
+    //await Job.deleteMany();
 
     const jsonProducts = JSON.parse(
       await readFile(new URL('./mock-data.json', import.meta.url))

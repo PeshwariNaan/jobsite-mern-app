@@ -20,6 +20,7 @@ export const createJob = async (req, res) => {
 
 // GetAllJobs Controller
 export const getAllJobs = async (req, res) => {
+  console.log(req.user);
   const { search, status, jobType, sort } = req.query;
 
   const queryObject = {
@@ -38,7 +39,7 @@ export const getAllJobs = async (req, res) => {
   }
 
   //NO AWAIT
-  console.log(queryObject);
+  //console.log(queryObject);
   let result = Job.find(queryObject);
 
   // Chain sort options

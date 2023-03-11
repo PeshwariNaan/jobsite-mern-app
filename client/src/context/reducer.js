@@ -31,6 +31,7 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  DELETE_JOB_ERROR,
 } from './actions';
 import { initialState } from './appContext';
 
@@ -257,6 +258,15 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+  if (action.type === DELETE_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     };
   }
   if (action.type === EDIT_JOB_BEGIN) {

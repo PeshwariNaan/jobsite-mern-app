@@ -47,3 +47,5 @@ export const SET_EDIT_JOB = 'SET_EDIT_JOB';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
 
 export const CHANGE_PAGE = 'CHANGE_PAGE';
+
+export const DELETE_JOB_ERROR = 'DELETE_JOB_ERROR';
