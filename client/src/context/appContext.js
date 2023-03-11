@@ -367,11 +367,15 @@ const AppProvider = ({ children }) => {
 
   // GET CURRENT USER
   const getCurrentUser = async () => {
-    dispatch({ GET_CURRENT_USER_BEGIN });
+    dispatch({ type: GET_CURRENT_USER_BEGIN });
     try {
-      const { data } = authFetch('/auth/getCurrentUser');
+      const { data } = await authFetch('/auth/getCurrentUser');
       const { user, location } = data;
-      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, location } });
+
+      dispatch({
+        type: GET_CURRENT_USER_SUCCESS,
+        payload: { user, location },
+      });
     } catch (error) {
       if (error.response.status === 401) return;
       logoutUser();
@@ -406,7 +410,9 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log('run getCurrentUser');
     getCurrentUser();
+    // eslint-disable-next-line
   }, []);
 
   const value = {
@@ -429,6 +435,7 @@ const AppProvider = ({ children }) => {
     showStats,
     clearFilters,
     changePage,
+    getCurrentUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

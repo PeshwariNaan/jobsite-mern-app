@@ -145,8 +145,7 @@ const reducer = (state, action) => {
     return {
       ...initialState,
       user: null,
-      userLocation: '',
-      jobLocation: '',
+      isUserLoading: false,
     };
   }
   if (action.type === UPDATE_USER_BEGIN) {
@@ -318,6 +317,22 @@ const reducer = (state, action) => {
     return {
       ...state,
       page: action.payload.page,
+    };
+  }
+  if (action.type === GET_CURRENT_USER_BEGIN) {
+    return {
+      ...state,
+      isUserLoading: true,
+      showAlert: false,
+    };
+  }
+  if (action.type === GET_CURRENT_USER_SUCCESS) {
+    return {
+      ...state,
+      isUserLoading: false,
+      user: action.payload.user,
+      userLocation: action.payload.location,
+      jobLocation: action.payload.location,
     };
   }
 
