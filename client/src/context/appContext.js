@@ -37,19 +37,19 @@ import {
 } from './actions';
 import reducer from './reducer';
 
-const token = localStorage.getItem('token');
-const user = localStorage.getItem('user');
-const userLocation = localStorage.getItem('location');
+//**********Removed to change over to using cookies*** -NO LONGER USING LOCAL STORAGE */
+// const token = localStorage.getItem('token');
+// const user = localStorage.getItem('user');
+// const userLocation = localStorage.getItem('location');
 
 const initialState = {
   isLoading: false,
   showAlert: false,
   alertText: '',
   alertType: '',
-  user: user ? JSON.parse(user) : null,
-  token: token,
-  userLocation: userLocation || '',
-  jobLocation: userLocation || '',
+  user: null,
+  userLocation: '',
+  jobLocation: '',
   isEditing: false,
   editJobId: '',
   position: '',
@@ -84,16 +84,16 @@ const AppProvider = ({ children }) => {
     baseURL: '/api/v1/',
   });
 
-  // Request
-  authFetch.interceptors.request.use(
-    (config) => {
-      config.headers['Authorization'] = `Bearer ${state.token}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  // Request - **** ON MOVING TO COOKIES WE NO LONGER NEED THIS INTERCEPTOR
+  // authFetch.interceptors.request.use(
+  //   (config) => {
+  //     config.headers['Authorization'] = `Bearer ${state.token}`;
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   // Response
   authFetch.interceptors.response.use(
@@ -123,19 +123,19 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
-  // ADDS USER TO LOCAL STORAGE
-  const addUserToLocalStorage = ({ user, token, location }) => {
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('token', token);
-    localStorage.setItem('location', location);
-  };
+  // ADDS USER TO LOCAL STORAGE -***REMOVED TO USE COOKIES
+  // const addUserToLocalStorage = ({ user, token, location }) => {
+  //   localStorage.setItem('user', JSON.stringify(user));
+  //   localStorage.setItem('token', token);
+  //   localStorage.setItem('location', location);
+  // };
 
-  // REMOVE USER DATA FROM LOCAL STORAGE
-  const removeUserFromLocalStorage = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('location');
-  };
+  // REMOVE USER DATA FROM LOCAL STORAGE -***REMOVED TO USE COOKIES
+  // const removeUserFromLocalStorage = () => {
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('user');
+  //   localStorage.removeItem('location');
+  // };
 
   // REGISTERS NEW USER - JUST FOR EXAMPLE - MOVED TO SETUP USER
   const registerUser = async (currentUser) => {
@@ -152,7 +152,6 @@ const AppProvider = ({ children }) => {
         type: REGISTER_USER_SUCCESS,
         payload: { user, token, location },
       });
-      addUserToLocalStorage({ user, token, location });
     } catch (error) {
       console.log(error.response);
       dispatch({
@@ -178,7 +177,6 @@ const AppProvider = ({ children }) => {
         type: LOGIN_USER_SUCCESS,
         payload: { user, token, location },
       });
-      addUserToLocalStorage({ user, token, location });
     } catch (error) {
       console.log(error.response);
       dispatch({
@@ -199,12 +197,11 @@ const AppProvider = ({ children }) => {
         data: currentUser,
       });
       //console.log(response);
-      const { user, token, location } = data;
+      const { user, location } = data;
       dispatch({
         type: SETUP_USER_SUCCESS,
-        payload: { user, token, location, alertText },
+        payload: { user, location, alertText },
       });
-      addUserToLocalStorage({ user, token, location });
     } catch (error) {
       console.log(error.response);
       dispatch({
@@ -271,7 +268,7 @@ const AppProvider = ({ children }) => {
   // LOGOUT USER
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
+    //removeUserFromLocalStorage();
   };
 
   // HANDLE CHANGE
@@ -301,13 +298,12 @@ const AppProvider = ({ children }) => {
         //   },
         // }
       );
-      const { user, location, token } = data;
+      const { user, location } = data;
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { user, location, token },
+        payload: { user, location },
       });
-      addUserToLocalStorage({ user, location, token });
     } catch (error) {
       if (error.response.status !== 401) {
         dispatch({
