@@ -1,6 +1,6 @@
 # Job-Hunter App
 
-This web-app is designed to keep track of a users job application status. A user that is hunting for a job can enter information about that job including the name of the company, the location of the job, type of job (full-time, part-time, internship), the title of the position and the status of the application (Pending, Interview or declined). The app records and displays all jobs that have been applied for and shows stats for the past 6 months of job applications in a bar or area graph. The user can also search
+This web-app is designed to keep track of a users job application status. A user that is hunting for a job can enter information about that job including the name of the company, the location of the job, type of job (full-time, part-time, internship), the title of the position and the status of the application (Pending, Interview or declined). The app records and displays all jobs that have been applied for and shows stats for the past 6 months of job applications in a bar or area graph as per the users choice. The user can also search and/or sort through all jobs in the database.
 
 This is my solution to the Jobify web app from John Smilga's MERN Stack Course 2023 - MongoDB, Express, React and NodeJS.
 
