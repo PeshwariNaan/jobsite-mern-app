@@ -53,7 +53,7 @@ Users should be able to:
 - JWT for authentication and authorization (using secure cookies)
 - "express-async-errors" package
 - [Mockaroo](https://mockaroo.com/) - For creating test data. This is awesome if you haven't seen it before.
-- [Heroku](https://www.heroku.com/) - Hosting service
+- [Render](https://render.com/) - Hosting service
 - [Styled Components](https://styled-components.com/) - For styles
 
 ### What I learned
