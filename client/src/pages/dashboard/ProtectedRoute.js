@@ -4,7 +4,6 @@ import Loading from '../../components/Loading';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isUserLoading } = useAppContext();
-  console.log('USER from protected route page :', user);
 
   if (isUserLoading) return <Loading center />;
 
