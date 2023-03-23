@@ -20,7 +20,7 @@ export const createJob = async (req, res) => {
 
 // GetAllJobs Controller
 export const getAllJobs = async (req, res) => {
-  console.log(req.user);
+  //console.log(req.user);
   const { search, status, jobType, sort } = req.query;
 
   const queryObject = {

@@ -32,10 +32,10 @@ Users should be able to:
 
 ![Landing-view-mobile](client/src/assets/screenshots/landing_mbl.png)
 ![Login-view-mobile](client/src/assets/screenshots/login_mbl.png)
-![Stats-view-desktop](client/src/assets/screenshots/stats_dt.png)
-![All-jobs-view-desktop](client/src/assets/screenshots/alljobs_dt.png)
-![Add-job-view-desktop](client/src/assets/screenshots/addjob_dt.png)
-![Profile-view-tablet](client/src/assets/screenshots/profile_tb.png)
+![Stats-view-desktop](client/src/assets/screenshots/dash_board_dt.png)
+![All-jobs-view-desktop](client/src/assets/screenshots/all_jobs_dt.png)
+![Add-job-view-desktop](client/src/assets/screenshots/add_job_dt.png)
+![Profile-view-tablet](client/src/assets/screenshots/profile_mbl.png)
 
 ### Links
 
