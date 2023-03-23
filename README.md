@@ -30,8 +30,8 @@ Users should be able to:
 
 ### Screenshot
 
-![Landing-view-mobile](client/src/assets/screenshots/landing_mbl.png)
-![Login-view-mobile](client/src/assets/screenshots/login_mbl.png)
+![Landing-view-mobile](client/src/assets/screenshots/landing2_mbl.png)
+![Login-view-mobile](client/src/assets/screenshots/login2_mbl.png)
 ![Stats-view-desktop](client/src/assets/screenshots/dash_board_dt.png)
 ![All-jobs-view-desktop](client/src/assets/screenshots/all_jobs_dt.png)
 ![Add-job-view-desktop](client/src/assets/screenshots/add_job_dt.png)
