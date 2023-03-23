@@ -74,7 +74,7 @@ This course had a great deal of content and I in turn learned a lot as well as r
 
 ### Continued development
 
-In short, the only way to continue on is to build, build, build. If it's one thing I've learned in this journey is that none of this information sticks without continuous application. Now that my backend skills with React, Node, express, and Mongo are growing, I can tackle some of the larger projects in [Frontend Mentor](https://www.frontendmentor.io/home). This is a great site that offers projects to build for growing developers. They give just the design specifications as well as the images for a given project and you build it with your choice of code, libraries and frameworks. No code is given so the final result is a true reflection of the developers skill and it's a great way to improve on all levels and has a good community for support.
+In short, the only way to continue on is to build, build, build. If it's one thing I've learned in this journey is that none of this information sticks without continuous application. Now that my backend skills with React, Node, express, and Mongo are growing, I can complete my professional projects with much more confidence. I also plan to redo the security and modify the pipelines in some existing full stack projects.
 
 ### Useful resources
 
