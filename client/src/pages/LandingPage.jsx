@@ -20,11 +20,10 @@ const LandingPage = () => {
               job <span>tracking</span> app
             </h1>
             <p>
-              Flannel selvage officia DIY sunt food truck kitsch minim affogato
-              polaroid man bun. Reprehenderit paleo gentrify do. Neutra roof
-              party put a bird on it sartorial chillwave ugh. Mollit cupidatat
-              green juice activated charcoal laboris typewriter hell of, small
-              batch bespoke elit before they sold out celiac.
+              Your premier site for tracking your applications and keeping
+              yourself organized on the job hunt. Never agian forget the
+              companies you have applied to or the jobs you have interviewed
+              for.
             </p>
             <Link to="/register" className="btn btn-hero">
               Login/Register
