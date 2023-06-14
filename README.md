@@ -6,14 +6,16 @@ This is my solution to the Jobify web app from John Smilga's MERN Stack Course 2
 
 ## Table of contents
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
+- [Job-Hunter App](#job-hunter-app)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [The challenge](#the-challenge)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+    - [Built with](#built-with)
+    - [What I learned](#what-i-learned)
+    - [Continued development](#continued-development)
+    - [Useful resources](#useful-resources)
   - [Author](#author)
   - [Acknowledgments](#acknowledgments)
 
@@ -40,7 +42,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Github-rep](https://github.com/PeshwariNaan/jobsite-mern-app.git)
-- Live Site URL: [Live-Link](https://jobhunt-mern-app.onrender.com)
+- Live Site URL: [Live-Link](https://job-hunter.herokuapp.com/landing)
 
 ### Built with
 
